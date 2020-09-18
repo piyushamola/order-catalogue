@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {  Route, Link } from "react-router-dom";
+import HomeScreen from "./screens/HomeScreen";
+import Cart from "../src/components/Cart"
+import { connect } from 'react-redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+          <div className="grid-container">
+            <header>
+              <Link to="/">Shopping Cart</Link>
+              <Link to="/cart">Cart Items :  {this.props.cartItems.length}</Link>
+            </header>
+            <main>
+              <Route path="/cart" component={Cart} />
+              <Route path="/" component={HomeScreen} exact />
+            </main>
+          </div>
+    );
+  }
 }
 
-export default App;
+export default connect((state) => ({
+  cartItems: state.cart.cartItems
+}),null)(App);
